@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block Title %} Django Blogs {% endblock %}</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f7f9fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        nav {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.6s ease;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a,
+        .nav-links button.logout-link {
+            color: white;
+            margin: 0 0.8rem;
+            text-decoration: none;
+            font-size: 1rem;
+            background: none;
+            border: none;
+            font-family: inherit;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links button.logout-link:hover {
+            color: #1abc9c;
+            text-decoration: underline;
+        }
+
+        /* Message */
+        .message {
+            text-align: center;
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            padding: 1rem;
+            margin: 1.5rem auto;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 6px;
+        }
+
+        /* Content Container */
+            .container {
+                flex-grow: 1;
+                max-width: 800px;
+                width: 100%;
+                margin: 2rem auto;
+                padding: 0 1rem;
+                animation: fadeIn 1s ease;
+            }
+
+        /* Post Card */
+        .post {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .post:hover {
+            transform: scale(1.02);
+        }
+
+        .post h2 {
+            margin: 0 0 0.5rem;
+            color: #2c3e50;
+        }
+
+        .post h2 a {
+            color: #2c3e50;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s ease;
+        }
+
+        .post h2 a:hover {
+            color: #1abc9c;
+            border-bottom: 2px solid #1abc9c;
+        }
+
+        .meta {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .post p {
+            color: #555;
+        }
+
+        /* Footer */
+            footer {
+                background: #2c3e50;
+                color: white;
+                text-align: center;
+                padding: 1rem;
+                font-size: 0.9rem;
+                margin-top: auto;
+            }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+
+    {% block navbar %}
+    <!-- Navbar -->
+    <nav>
+        <div class="logo"><strong>Django Blog</strong></div>
+        <div class="nav-links">
+            <a href="{% url 'Blog-Home' %}">Home</a>
+            
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'post_create' %}">Create Post</a>
+
+                <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-link">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+    {% endblock %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% block container %}{% endblock %}
+
+    {% block footer %}
+    <footer>
+        &copy; 2025 Django Blog. All rights reserved.
+    </footer>
+    {% endblock %}
+</body>
+</html>
+>

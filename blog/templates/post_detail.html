@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block container %}
+<style>
+    .post-detail-container {
+        max-width: 800px;
+        margin: 3rem auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        animation: fadeIn 0.6s ease;
+    }
+
+    .post-title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+    }
+
+    .author-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .author-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #1abc9c;
+        margin-right: 1rem;
+    }
+
+    .author-name {
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .post-date {
+        font-size: 0.9rem;
+        color: #888;
+    }
+
+    .post-content {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: #333;
+        margin-top: 1rem;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #3498db;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+</style>
+
+<div class="post-detail-container">
+    <h1 class="post-title">{{ object.title }}</h1>
+
+    <div class="author-info">
+        <img src="{% if object.author.profile.image %}{{ object.author.profile.image.url }}{% else %}{% static 'default.jpg' %}{% endif %}" 
+             alt="Author Image" 
+             class="author-image">
+        <div>
+            <div class="author-name">{{ object.author.username }}</div>
+            <div class="post-date">{{ object.date_posted }}</div>
+        </div>
+    </div>
+
+    <div class="post-content">
+        {{ object.content }}
+    </div>
+
+
+
+    {% if user == object.author %}
+        <div style="margin-top: 2rem;">
+            <a href="{% url 'post_update' object.pk %}" class="btn btn-primary">Update</a>
+            <a href="{% url 'post_delete' object.pk %}" class="btn btn-danger" style="margin-left: 1rem;">Delete</a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

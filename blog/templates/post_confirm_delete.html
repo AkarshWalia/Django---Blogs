@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block container %}
+
+<style>
+
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #3498db;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+</style>
+
+  <div class="container">
+    <h2>Delete Post</h2>
+    <p>Are you sure you want to delete "{{ object.title }}"?</p>
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, delete</button>
+      <a href="{% url 'post_view' object.pk %}" class="btn btn-primary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}
