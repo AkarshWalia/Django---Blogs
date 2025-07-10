@@ -22,7 +22,7 @@ DEBUG = not RENDER_DEPLOY
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 else:
-    ALLOWED_HOSTS = ['django-blogs-ov0r.onrender.com']
+    ALLOWED_HOSTS = ['django-blogs-hme5.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
